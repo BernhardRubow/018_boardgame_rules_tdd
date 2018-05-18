@@ -173,6 +173,30 @@ namespace newvisionsproject.boardgame.tests
         }
 
         [Test]
+        public void test_rules_h4_b0_s0_d_y5_y6()
+        {
+
+            int diceValue = 5;
+            var result = _gameboard.Move(CheckRules("y5"));
+            Assert.AreEqual(false, result.CanMove);
+            Assert.AreEqual(true, result.AdditionalThrowGranted);
+
+            diceValue = 6;
+            if (result.AdditionalThrowGranted)
+            {
+                result = _gameboard.Move(CheckRules("y6"));
+                Assert.AreEqual(true, result.CanMove);
+                Assert.AreEqual(true, result.AdditionalThrowGranted);
+            }
+
+            // do the move and test
+            var pf = CheckWorldPosition(20);
+            Assert.AreEqual(0, pf.Index);
+            Assert.AreEqual(0, pf.LocalPosition);
+            Assert.AreEqual(PlayerColors.yellow, pf.Color);
+        }
+
+        [Test]
         public void test_rules_h4_b0_s0_d_g5_g6()
         {
 
@@ -281,6 +305,27 @@ namespace newvisionsproject.boardgame.tests
             Assert.AreEqual(PlayerColors.green, pf.Color);
         }
 
+        [Test]
+        public void test_rules_h4_b0_s0_d_rbyg6_rbyg6_rbyg2()
+        {
+            CheckMovesResult result = null;
+            var diceRolls = new[] { "r6", "r6", "r2", "b6", "b6", "b2", "y6", "y6", "y2", "g6", "g6", "g2" };
+            for (int i = 0, n = diceRolls.Length; i < n; i++)
+            {
+                result = _gameboard.Move(CheckRules(diceRolls[i]));
+            }
+
+            int numberOfRedFigures = nvp_RuleHelper.CountPlayersOnBoard(PlayerColors.red, result.PlayerFigures);
+            int numberOfGreenFigures = nvp_RuleHelper.CountPlayersOnBoard(PlayerColors.green, result.PlayerFigures);
+            int numberOfYellowFigures = nvp_RuleHelper.CountPlayersOnBoard(PlayerColors.yellow, result.PlayerFigures);
+            int numberOfBlackFigures = nvp_RuleHelper.CountPlayersOnBoard(PlayerColors.black, result.PlayerFigures);
+
+            Assert.AreEqual(1, numberOfRedFigures);
+            Assert.AreEqual(1, numberOfYellowFigures);
+            Assert.AreEqual(1, numberOfGreenFigures);
+            Assert.AreEqual(1, numberOfBlackFigures);
+        }
+        
 
 
 
