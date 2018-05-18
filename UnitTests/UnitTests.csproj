@@ -1,16 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\NUnit.3.10.1\build\NUnit.props" Condition="Exists('..\packages\NUnit.3.10.1\build\NUnit.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6A43C83D-33BC-4962-8301-3F9D8A89ACDB}</ProjectGuid>
+    <ProjectGuid>{5FD183DC-ACD3-4667-A7B7-FA887D9F41D1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BoardGame</RootNamespace>
-    <AssemblyName>BoardGame</AssemblyName>
+    <RootNamespace>UnitTests</RootNamespace>
+    <AssemblyName>UnitTests</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="nunit.framework, Version=3.10.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.10.1\lib\net45\nunit.framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,23 +47,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="dto\CheckMovesResult.cs" />
-    <Compile Include="enums\PlayerColors.cs" />
-    <Compile Include="dto\PlayerFigure.cs" />
-    <Compile Include="dto\PlayerMove.cs" />
-    <Compile Include="gameLogic\nvp_Rule_50_HaveToKill.cs" />
-    <Compile Include="gameLogic\nvp_Rule_60_JustMove.cs" />
-    <Compile Include="gameLogic\nvp_GameBoard_class.cs" />
-    <Compile Include="gameLogic\nvp_RuleDefault_class.cs" />
-    <Compile Include="gameLogic\nvp_RuleHelper.cs" />
-    <Compile Include="gameLogic\nvp_Rule_20_MustLeaveStart.cs" />
-    <Compile Include="gameLogic\nvp_Rule_30_MustLeaveHouse.cs" />
-    <Compile Include="gameLogic\nvp_Rule_10_GetsAdditionalRuleOn6.cs" />
-    <Compile Include="gameLogic\nvp_Rule_40_Cant_leave_house_class.cs" />
-    <Compile Include="interfaces\IRule.cs" />
+    <Compile Include="GameLogicTests\gameBoardTests.cs" />
+    <Compile Include="GameLogicTests\singleRuleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BoardGame\BoardGame.csproj">
+      <Project>{6a43c83d-33bc-4962-8301-3f9d8a89acdb}</Project>
+      <Name>BoardGame</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\NUnit.3.10.1\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit.3.10.1\build\NUnit.props'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
