@@ -27,7 +27,7 @@ namespace BoardGame.gameLogic
                 // used all free rolls
                 result.LastActiveRule = "nvp_Rule_40_Cant_leave_house_class";
                 result.CanMove = false;
-                result.AdditionalThrowGranted = false;
+                result.AdditionalRollGranted = false;
                 _numberOfTries = 0;
                 return result;
             }
@@ -36,14 +36,14 @@ namespace BoardGame.gameLogic
             {
                 result.LastActiveRule = "nvp_Rule_40_Cant_leave_house_class";
                 result.CanMove = true;
-                result.AdditionalThrowGranted = true;
+                result.AdditionalRollGranted = true;
                 _numberOfTries = 0;
                 return result;
             }
             else
             {
                 result.CanMove = false;
-                result.AdditionalThrowGranted = true;
+                result.AdditionalRollGranted = true;
                 result.LastActiveRule = "nvp_Rule_40_Cant_leave_house_class";
                 return result;
             }

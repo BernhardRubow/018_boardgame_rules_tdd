@@ -9,7 +9,7 @@ namespace BoardGame.gameLogic
 
         public CheckMovesResult CheckRule(CheckMovesResult result)
         {
-            if (result.DiceValue == 6) result.AdditionalThrowGranted = true;
+            if (result.DiceValue == 6) result.AdditionalRollGranted = true;
             return _nextRule.CheckRule(result);
         }
 

@@ -31,7 +31,7 @@ namespace BoardGame.gameLogic
                 else
                 {
                     result.CanMove = false;
-                    result.AdditionalThrowGranted = false;
+                    result.AdditionalRollGranted = false;
                     result.LastActiveRule = "Must Leave Start";
                     return result;
                 }

@@ -12,7 +12,7 @@ namespace newvisionsproject.boardgame.dto
         public List<PlayerMove> PossibleMoves;
         public bool CanMove;
         public string Msg;
-        public bool AdditionalThrowGranted;
+        public bool AdditionalRollGranted;
         public List<PlayerFigure> PlayerFigures;
         public PlayerColors PlayerColor;
         public int DiceValue;

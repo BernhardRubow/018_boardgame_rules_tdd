@@ -11,7 +11,7 @@ namespace BoardGame.gameLogic
         public CheckMovesResult CheckRule(CheckMovesResult result)
         {
             result.CanMove = false;
-            result.AdditionalThrowGranted = false;
+            result.AdditionalRollGranted = false;
             result.LastActiveRule = "Rule Default.";
             return result;
         }

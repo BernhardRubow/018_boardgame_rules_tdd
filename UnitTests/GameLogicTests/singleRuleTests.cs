@@ -26,7 +26,7 @@ namespace UnitTests.GameLogicTests
             var rule = new nvp_Rule_50_HaveToKill().SetNextRule(new nvp_RuleDefault_class());
             result = rule.CheckRule(result);
             Assert.AreEqual(true, result.CanMove);
-            Assert.AreEqual(false, result.AdditionalThrowGranted);
+            Assert.AreEqual(false, result.AdditionalRollGranted);
             Assert.AreEqual(1, result.PossibleMoves.Count);
             Assert.AreEqual(0, result.PossibleMoves[0].Index);
         }
@@ -45,7 +45,7 @@ namespace UnitTests.GameLogicTests
             var rule = new nvp_Rule_50_HaveToKill().SetNextRule(new nvp_RuleDefault_class());
             result = rule.CheckRule(result);
             Assert.AreEqual(true, result.CanMove);
-            Assert.AreEqual(false, result.AdditionalThrowGranted);
+            Assert.AreEqual(false, result.AdditionalRollGranted);
             Assert.AreEqual(2, result.PossibleMoves.Count);
             Assert.AreEqual(0, result.PossibleMoves[0].Index);
             Assert.AreEqual(1, result.PossibleMoves[1].Index);

@@ -28,7 +28,7 @@ namespace BoardGame.gameLogic
                 .First();
 
             result.CanMove = true;
-            result.AdditionalThrowGranted = true;
+            result.AdditionalRollGranted = true;
             result.LastActiveRule = "Must leave house";
             result.PossibleMoves.Add(new PlayerMove
             {
