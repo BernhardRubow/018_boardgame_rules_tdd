@@ -559,6 +559,51 @@ namespace newvisionsproject.boardgame.tests
 
 
 
+        [Test]
+        public void test_rules_h4_b0_s0_d_g6_g6_g6_g5_g6_g4_g4()
+        {
+            /** multiple figures of red player on board
+             * Setting inital position 4 player game
+             * red player rolls:
+             * 6-6-6-5-6-4-4
+             * Expected Result
+             * world position red-0     : 6
+             * world position red-1     : 5
+             * world position red-2     : 8
+             */
+
+            CheckMovesResult result = null;
+            var diceRolls = new[] { "r6","r6","r6", "r5", "r6", "r4", "r4" };
+            for (int i = 0, n = diceRolls.Length; i < n; i++)
+            {
+                result = CheckRules(diceRolls[i]);
+                if (!result.CanMove) break;
+                result = result.PossibleMoves.Count == 1 
+                    ? _gameboard.Move(CheckRules(diceRolls[i])) 
+                    : _gameboard.Move(CheckRules(diceRolls[i]), 2);
+            }
+
+            // There should be 3 figures on board
+            int numberOfGreenfigures = nvp_RuleHelper.CountPlayersOnBoard(PlayerColors.red, result.PlayerFigures);
+            Assert.AreEqual(3, numberOfGreenfigures);
+
+            // 3 move should be possible after the last roll
+            Assert.AreEqual(true, result.CanMove);
+            Assert.AreEqual(3, result.PossibleMoves.Count);
+
+            // if we move the figure with the index 2 for the last roll
+            // 
+            var pf = nvp_RuleHelper.GetFigureOnWorldPosition(_gameboard.playerFigures, 5);
+            Assert.AreEqual(PlayerColors.red, pf.Color);
+            pf = nvp_RuleHelper.GetFigureOnWorldPosition(_gameboard.playerFigures, 6);
+            Assert.AreEqual(PlayerColors.red, pf.Color);
+            pf = nvp_RuleHelper.GetFigureOnWorldPosition(_gameboard.playerFigures, 8);
+            Assert.AreEqual(PlayerColors.red, pf.Color);
+            Assert.AreEqual(2, pf.Index);
+        }
+
+
+
 
         // +++ creation tests +++
         [Test]

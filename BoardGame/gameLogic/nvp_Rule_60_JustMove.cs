@@ -1,5 +1,7 @@
+using System.Linq;
 using BoardGame.interfaces.newvisionsproject.boardgame.interfaces;
 using newvisionsproject.boardgame.dto;
+using NUnit.Framework.Constraints;
 
 namespace BoardGame.gameLogic
 {
@@ -19,9 +21,9 @@ namespace BoardGame.gameLogic
             var playerFigures = nvp_RuleHelper.GetFiguresOnBoardByColor(result.PlayerColor, result.PlayerFigures, result.DiceValue);
             if (playerFigures.Count == 0) return _nextRule.CheckRule(result);
 
-            if (playerFigures.Count == 1)
+            for (int i = 0, n = playerFigures.Count; i < n; i++)
             {
-                var pf = playerFigures[0];
+                var pf = playerFigures[i];
                 if (pf.LocalPosition + result.DiceValue < 45)
                 {
                     result.CanMove = true;
@@ -33,11 +35,11 @@ namespace BoardGame.gameLogic
                         DiceValue = result.DiceValue,
                         Index = pf.Index
                     });
-                    return result;
                 }
             }
 
-            return _nextRule.CheckRule(result);
+            result.PossibleMoves = result.PossibleMoves.OrderBy(x => x.Index).ToList();
+            return result;
         }
     }
 }

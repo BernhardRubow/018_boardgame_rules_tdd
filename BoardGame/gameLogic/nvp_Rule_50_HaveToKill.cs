@@ -22,21 +22,22 @@ namespace BoardGame.gameLogic
 
             if (ownFigures.Count > 1)
             {
-                CheckRuleForFigure(result, ownFigures[0]);
-                CheckRuleForFigure(result, ownFigures[1]);
-                return result;
+                var haveToKill = false;
+                haveToKill |= CheckRuleForFigure(result, ownFigures[0]);
+                haveToKill |= CheckRuleForFigure(result, ownFigures[1]);
+                if(haveToKill) return result;
             }
 
             return _nextRule.CheckRule(result);
         }
 
-        private void CheckRuleForFigure(CheckMovesResult result, PlayerFigure figureToCheck)
+        private bool CheckRuleForFigure(CheckMovesResult result, PlayerFigure figureToCheck)
         {
             int worlPositionToCheck = (figureToCheck.WorldPosition + result.DiceValue)%41;
             PlayerFigure playerFigureFound = nvp_RuleHelper.GetFigureOnWorldPosition(result.PlayerFigures, worlPositionToCheck);
             if (playerFigureFound == null || (playerFigureFound != null && playerFigureFound.Color == result.PlayerColor))
             {
-                return;
+                return false;
             }
 
             result.CanMove = true;
@@ -47,6 +48,8 @@ namespace BoardGame.gameLogic
                 DiceValue = result.DiceValue,
                 Index = figureToCheck.Index
             });
+
+            return true;
         }
     }
 }
